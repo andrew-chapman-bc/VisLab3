@@ -17,7 +17,7 @@ d3.csv('buildings.csv', d3.autoType).then(data=>{
 		return b.height_ft - a.height_ft;
 	  });
 	  makeBar()
-	//console.log('data', data);
+	  makeStartingInfo("Burj Khalifa")
 	console.log('buildings', buildings);
 	
 })
@@ -96,6 +96,10 @@ function makeBar() {
 					.attr("width", function(d,i) {
 						return d.height_px;})
 					.attr("height", 35)
+					.on("click", function(d) {
+						makeInfoSheet(d)
+						//console.log(d)
+					  });
 
 	let numLabels = svg.selectAll(".height-plot")
 					.data(buildings)
@@ -125,7 +129,79 @@ function makeBar() {
 					.attr("y", function(d, i) {
 						return i * 50 + 25;
 					});
-					//.attr("text-anchor", "end");
 }
 
+function makeInfoSheet(thing) {
+	let pick = thing.target.__data__.building
+	var useThis = buildings.filter(function(item){
+		return item.building == pick;         
+	});
+	heightIn = d3.select('.height')
+				.data(useThis)
+				.text(function(d) {
+					return d.height_ft;
+				});
+	cityIn = d3.select('.city')
+				.data(useThis)
+				.text(function(d) {
+					return d.city;
+				});
+	countryIn = d3.select('.country')
+				.data(useThis)
+				.text(function(d) {
+					return d.country;
+				});
+	floorsIn = d3.select('.floors')
+				.data(useThis)
+				.text(function(d) {
+					return d.floors;
+				});
+	completedIn = d3.select('.completed')
+				.data(useThis)
+				.text(function(d) {
+					return d.completed;
+				});
+	imageIn = d3.select('.image')
+				.data(useThis)
+				.attr('src',function(d) {
+					return d.image;
+				});
 
+}
+
+function makeStartingInfo(start) {
+	var useThis = buildings.filter(function(item){
+		return item.building == start;         
+	});
+	heightIn = d3.select('.height')
+				.data(useThis)
+				.text(function(d) {
+					return d.height_ft;
+				});
+	cityIn = d3.select('.city')
+				.data(useThis)
+				.text(function(d) {
+					return d.city;
+				});
+	countryIn = d3.select('.country')
+				.data(useThis)
+				.text(function(d) {
+					return d.country;
+				});
+	floorsIn = d3.select('.floors')
+				.data(useThis)
+				.text(function(d) {
+					return d.floors;
+				});
+	completedIn = d3.select('.completed')
+				.data(useThis)
+				.text(function(d) {
+					return d.completed;
+				});
+	imageIn = d3.select('.image')
+				.data(useThis)
+				.attr('src',function(d) {
+					return d.image;
+				});
+
+}
